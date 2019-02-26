@@ -344,7 +344,7 @@ def search(ID=None,time_range=None,prog_ID=None,data_type='cosmicsremoved_log',
     #   SIMBAD. Else, we have no information on the ra and dec (if bvcorr was
     #   not calculated, ra and dec are not in the header).
     for obs in data:
-        if ID is not None and info:
+        if ID and info:
             try:
                 jd  = _timestamp2jd(obs['date-avg'])
             except ValueError:
@@ -365,7 +365,7 @@ def search(ID=None,time_range=None,prog_ID=None,data_type='cosmicsremoved_log',
 
 
     #-- do we need the information as a file, or as a numpy array?
-    if filename is not None:
+    if filename:
         ascii.write_array(data,filename,auto_width=True,header=True)
     else:
         return data
@@ -468,12 +468,12 @@ def make_mask_file(wavelength,depth,filename='mymask.fits'):
     """
     Make a mask file for RV calculations with the Hermes pipeline.
 
-    See L{ivs.units.linelists} to select appropriate masks. You readily use the
+    See L{ivs.spectra.linelists} to select appropriate masks. You readily use the
     columns C{wavelength} and C{depth} as input for this function.
 
     @param wavelength: wavelength in angstrom
     @type wavelength: 1D numpy array
-    @param depth: strenght of the line (1-normalised flux minimum)
+    @param depth: strength of the line (1-normalised flux minimum)
     @type depth: 1D numpy array
     """
     data = np.array([wavelength,depth]).T
